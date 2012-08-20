@@ -117,11 +117,9 @@ https://github.com/rails/jbuilder &hellip;">
 <p>rails/jbuilder
 <a href="https://github.com/rails/jbuilder">https://github.com/rails/jbuilder</a></p>
 
-<p>RailsCasts 网站有一份教程，可以作为学习的补充</p>
-
-<h1>320 Jbuilder - RailsCasts</h1>
-
-<p><a href="http://railscasts.com/episodes/320-jbuilder?view=asciicast">http://railscasts.com/episodes/320-jbuilder?view=asciicast</a></p>
+<p>RailsCasts 网站有一份教程，可以作为学习的补充
+320 Jbuilder - RailsCasts
+<a href="http://railscasts.com/episodes/320-jbuilder?view=asciicast">http://railscasts.com/episodes/320-jbuilder?view=asciicast</a></p>
 
 <p>其实之前已经使用 ails/jbuilder 返回 json 格式内容，但一段时间没用，结果又碰到同样问题。</p>
 
@@ -129,7 +127,7 @@ https://github.com/rails/jbuilder &hellip;">
 undefined local variable or method `json&#8217;</p>
 
 <p>结果发现，原来是 渲染的模版扩展名不小心写错了，正确的是 .json.jbuilder；
-而我不小心写成了 .json.builder。</p>
+而我不小心写成了 .json.builder（xml 格式渲染模版的扩展名）。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
