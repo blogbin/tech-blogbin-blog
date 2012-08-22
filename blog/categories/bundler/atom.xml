@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bundler | Tech.Blogbin's Blog]]></title>
   <link href="http://tech-blog.blogbin.info/blog/categories/bundler/atom.xml" rel="self"/>
   <link href="http://tech-blog.blogbin.info/"/>
-  <updated>2012-08-22T22:09:24+08:00</updated>
+  <updated>2012-08-22T22:11:04+08:00</updated>
   <id>http://tech-blog.blogbin.info/</id>
   <author>
     <name><![CDATA[Tech Blogbin ]]></name>
@@ -85,6 +85,8 @@ end
 <code>ruby
 puts Settings.server_url.check_sensitive_data    # =&gt; "http://localhst:3001/bad_word_checker/check.json"
 </code></p>
+
+<p>看看，不需要指定 yml 文件和 env 环境，非常容易。</p>
 ]]></content>
   </entry>
   
