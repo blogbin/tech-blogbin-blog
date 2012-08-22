@@ -4,7 +4,7 @@
   <title><![CDATA[Tech.Blogbin's Blog]]></title>
   <link href="http://tech-blog.blogbin.info/atom.xml" rel="self"/>
   <link href="http://tech-blog.blogbin.info/"/>
-  <updated>2012-08-22T22:09:01+08:00</updated>
+  <updated>2012-08-22T22:09:24+08:00</updated>
   <id>http://tech-blog.blogbin.info/</id>
   <author>
     <name><![CDATA[Tech Blogbin ]]></name>
@@ -64,6 +64,11 @@ binarylogic/settingslogic <a href="https://github.com/binarylogic/settingslogic"
 </span><span class='line'>  <span class="n">server_url</span><span class="p">:</span>
 </span><span class='line'>    <span class="n">check_sensitive_data</span><span class="p">:</span> <span class="s2">&quot;http://localhst:3003/bad_word_checker/check.json&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
 
 
 <p>访问配置信息的代码比较丑陋，如</p>

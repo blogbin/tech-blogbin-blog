@@ -115,9 +115,7 @@ if @issue.save
 
 <h5>4. 最终效果如图</h5>
 
-<p>{% blockquote %}
-{% img /images/2012-08-15-displaying-attachments-and-due-date-within-email-when-a-issue-is-created/redmine_issue_add_email.png %}
-{% endblockquote %}</p>
+<p><blockquote><p><img src="/images/2012-08-15-displaying-attachments-and-due-date-within-email-when-a-issue-is-created/redmine_issue_add_email.png"></p></blockquote></p>
 ]]></content>
   </entry>
   

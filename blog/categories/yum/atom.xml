@@ -65,9 +65,7 @@ gem "newrelic_rpm"
 <p>最后按开发模式启动 Rails 项目</p>
 
 <p>浏览器访问 <a href="http://localhost:3000/newrelic">http://localhost:3000/newrelic</a>，效果如下：
-{% blockquote %}
-{% img /images/2012-08-22-monitoring-server-performance-with-new-relic/new_relic_development.png %}
-{% endblockquote %}</p>
+<blockquote><p><img src="/images/2012-08-22-monitoring-server-performance-with-new-relic/new_relic_development.png"></p></blockquote></p>
 ]]></content>
   </entry>
   
