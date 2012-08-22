@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Tech.Blogbin's Blog]]></title>
   <link href="http://tech-blog.blogbin.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://tech-blog.blogbin.info/"/>
-  <updated>2012-08-22T21:47:07+08:00</updated>
+  <updated>2012-08-22T22:09:24+08:00</updated>
   <id>http://tech-blog.blogbin.info/</id>
   <author>
     <name><![CDATA[Tech Blogbin ]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using binarylogic/settingslogic]]></title>
+    <link href="http://tech-blog.blogbin.info/blog/2012/08/22/using-binarylogic-slash-settingslogic/"/>
+    <updated>2012-08-22T22:00:00+08:00</updated>
+    <id>http://tech-blog.blogbin.info/blog/2012/08/22/using-binarylogic-slash-settingslogic</id>
+    <content type="html"><![CDATA[<p>Rails 项目中有一些全局配置信息需要保存在文件中，采用 binarylogic/settingslogic 来管理这些配置信息：</p>
+
+<p>参阅：
+binarylogic/settingslogic <a href="https://github.com/binarylogic/settingslogic">https://github.com/binarylogic/settingslogic</a></p>
+
+<p>介紹 Settingslogic | Beryllium Work <a href="http://blog.berylliumwork.com/2012/02/settingslogic.html">http://blog.berylliumwork.com/2012/02/settingslogic.html</a></p>
+
+<p>假设 config 有配置文件：
+``` ruby settings.yml
+default: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3000/bad_word_checker/check.json"
+</code></pre>
+
+<p>development:
+  &lt;&lt;: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3001/bad_word_checker/check.json" 
+</code></pre>
+
+<p>test:
+  &lt;&lt;: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3002/bad_word_checker/check.json" 
+</code></pre>
+
+<p>production:
+  &lt;&lt;: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3003/bad_word_checker/check.json" 
+</code></pre>
+
+<p>```</p>
+
+<!--more-->
+
+
+<p>访问配置信息的代码比较丑陋，如
+``` ruby settings.rb
+SYS_CONFIG = YAML.load_file(Rails.root.join("config/sys_config.yml"))[Rails.env]</p>
+
+<p>puts SYS_CONFIG["server_url"]["check_sensitive_data"]     # => "http://localhst:3001/bad_word_checker/check.json"
+```</p>
+
+<p>如果采用 settingslogic，先创建 settings.rb 文件
+``` ruby app/model/settings.rb</p>
+
+<h1>encoding: UTF-8</h1>
+
+<h1>binarylogic/settingslogic</h1>
+
+<h1>https://github.com/binarylogic/settingslogic</h1>
+
+<p>class Settings &lt; Settingslogic
+  source "#{Rails.root}/config/settings.yml"
+  namespace Rails.env
+end
+```</p>
+
+<p>通过 Settings 来访问配置信息，如：
+<code>ruby
+puts Settings.server_url.check_sensitive_data    # =&gt; "http://localhst:3001/bad_word_checker/check.json"
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails 返回 json 格式的内容]]></title>
@@ -103,7 +178,29 @@ WARNING: Nokogiri was built against LibXML version 2.7.3, but has dynamically lo
 <!--more-->
 
 
-<p><blockquote><p>Managed to fix it following these steps:</p></p><p><p>Installed XCode 4.4 and Command Line Tools<br/>Ran this in terminal:</p></p><p><p>sudo chown -R <user> /usr/local<br/>brew update<br/>brew tap homebrew/dupes<br/>brew install apple-gcc42</p></p><p><p>Installed XQuartz 2.7.2 (http://xquartz.macosforge.org/landing)</p></p><p><p>Fixed any errors reported by brew doctor<br/>Ran this in terminal:</p></p><p><p>gem uninstall rmagick<br/>brew uninstall imagemagick<br/>brew install --fresh imagemagick<br/>gem install rmagick</p></p><p><p>After this, RMagick worked flawlessly again!</p></blockquote></p>
+<p>{% blockquote %}
+Managed to fix it following these steps:</p>
+
+<p>Installed XCode 4.4 and Command Line Tools
+Ran this in terminal:</p>
+
+<p>sudo chown -R <user> /usr/local
+brew update
+brew tap homebrew/dupes
+brew install apple-gcc42</p>
+
+<p>Installed XQuartz 2.7.2 (http://xquartz.macosforge.org/landing)</p>
+
+<p>Fixed any errors reported by brew doctor
+Ran this in terminal:</p>
+
+<p>gem uninstall rmagick
+brew uninstall imagemagick
+brew install --fresh imagemagick
+gem install rmagick</p>
+
+<p>After this, RMagick worked flawlessly again!
+{% endblockquote %}</p>
 ]]></content>
   </entry>
   
@@ -119,22 +216,90 @@ WARNING: Nokogiri was built against LibXML version 2.7.3, but has dynamically lo
 
 <h5>1. 慎用 eval</h5>
 
-<p><blockquote><p>一般来说，能避免 eval 就尽量避免，因为 eval 有额外的“分析时”开销（将字符串作为源代码进行词法、文法分析），而这个“剖析时”却又是在程序“运行时”进行的。把不需要惰性求值的表达式预先进行及早求值，能避免一些分析时开销。如果可能的话，用 instance_exec，或 instance_eval 带块的形式，也比直接在字符串上求值好。</p></blockquote></p>
+<p>{% blockquote %}
+一般来说，能避免 eval 就尽量避免，因为 eval 有额外的“分析时”开销（将字符串作为源代码进行词法、文法分析），而这个“剖析时”却又是在程序“运行时”进行的。把不需要惰性求值的表达式预先进行及早求值，能避免一些分析时开销。如果可能的话，用 instance_exec，或 instance_eval 带块的形式，也比直接在字符串上求值好。
+{% endblockquote %}</p>
 
 <!--more-->
 
 
 <h5>2. 一句话明了 class_eval 的区别</h5>
 
-<p><blockquote><p>当作用于类时，class_eval将会定义实例方法，而instance_eval定义类方法。</p></blockquote></p>
+<p>{% blockquote %}
+当作用于类时，class_eval将会定义实例方法，而instance_eval定义类方法。
+{% endblockquote %}</p>
 
 <h5>3. class_variables 操作的是类变量，而非类实例变量</h5>
 
-<p><blockquote><p>1.3.9 class_variables<br/>　　如果你想知道一个类中有哪些类变量，我们可以使用class_varibles方法。他返回一个数组（Array），以符号（Symbol）的形式返回类变量的名称。<br/>```<br/>classRubyist<br/>  @@geek="Ruby's Matz"<br/>  @@country="USA"<br/>end</p></p><p><p>classChild &lt; Rubyist<br/>  @@city="Nashville"<br/>end<br/>print Rubyist.class_variables# => [:@@geek, :@@country]<br/>puts<br/>p Child.class_variables# => [:@@city]<br/>```<br/>　　你可以从程序的输出中观察到Child.class_variables输出的是在Child类中定义的类变量（@@city）。Child类没有从父类中继承类变量（@@geek, @@country）。</p></blockquote></p>
+<p>{% blockquote %}
+1.3.9 class_variables
+　　如果你想知道一个类中有哪些类变量，我们可以使用class_varibles方法。他返回一个数组（Array），以符号（Symbol）的形式返回类变量的名称。
+```
+classRubyist
+  @@geek="Ruby's Matz"
+  @@country="USA"
+end</p>
+
+<p>classChild &lt; Rubyist
+  @@city="Nashville"
+end
+print Rubyist.class_variables# => [:@@geek, :@@country]
+puts
+p Child.class_variables# => [:@@city]
+```
+　　你可以从程序的输出中观察到Child.class_variables输出的是在Child类中定义的类变量（@@city）。Child类没有从父类中继承类变量（@@geek, @@country）。
+{% endblockquote %}</p>
 
 <h5>4. 常量操作 const_get 和 const_set</h5>
 
-<p><blockquote><p>1.3.11 const_get, const_set</p></p><p><p>　　类似的，const_get和const_set用于操作常量。const_get返回指定常量的值：</p></p><p><p><code>ruby<br/>puts Float.const_get(:MIN) # =&gt; 2.2250738585072e-308<br/></code><br/>　　const_set为指定的常量设置指定的值，并返回该对象。如果常量不存在，那么他会创建该常量，就是下面示范的那样：<br/>``` ruby<br/>class Rubyist</p></p><p><p>end<br/>puts Rubyist.const_set("PI", 22.0/7.0) # => 3.14285714285714<br/>```</p></p><p><p>　　因为const_get返回常量的值，因此，你可以使用此方法获得一个类的名字并为这个类添加一个新的实例化对象的方法。这样使得我们有能力在运行时创建类并实例化其实例。<br/>``` ruby</p></p><p><h1>Let us call our new class 'Rubyist'</h1></p><p><h1>(we could have prompted the user for a class name)</h1></p><p><p>class_name = "rubyist".capitalize</p></p><p><p>Object.const_set(class_name, Class.new)</p></p><p><h1>Let us create a method 'who'</h1></p><p><h1>(we could have prompted the user for a method name)</h1></p><p><p>class_name = Object.const_get(class_name)</p></p><p><p>puts class_name # => Rubyist</p></p><p><p>class_name.class_eval do</p></p><p><p>  define_method :who do |my_arg|</p></p><p><pre><code>my_arg<br/></code></pre></p><p><p>  end<br/>end<br/>obj = class_name.new<br/>puts obj.who('Matz') # => Matz<br/>```</p></blockquote></p>
+<p>{% blockquote %}
+1.3.11 const_get, const_set</p>
+
+<p>　　类似的，const_get和const_set用于操作常量。const_get返回指定常量的值：</p>
+
+<p><code>ruby
+puts Float.const_get(:MIN) # =&gt; 2.2250738585072e-308
+</code>
+　　const_set为指定的常量设置指定的值，并返回该对象。如果常量不存在，那么他会创建该常量，就是下面示范的那样：
+``` ruby
+class Rubyist</p>
+
+<p>end
+puts Rubyist.const_set("PI", 22.0/7.0) # => 3.14285714285714
+```</p>
+
+<p>　　因为const_get返回常量的值，因此，你可以使用此方法获得一个类的名字并为这个类添加一个新的实例化对象的方法。这样使得我们有能力在运行时创建类并实例化其实例。
+``` ruby</p>
+
+<h1>Let us call our new class 'Rubyist'</h1>
+
+<h1>(we could have prompted the user for a class name)</h1>
+
+<p>class_name = "rubyist".capitalize</p>
+
+<p>Object.const_set(class_name, Class.new)</p>
+
+<h1>Let us create a method 'who'</h1>
+
+<h1>(we could have prompted the user for a method name)</h1>
+
+<p>class_name = Object.const_get(class_name)</p>
+
+<p>puts class_name # => Rubyist</p>
+
+<p>class_name.class_eval do</p>
+
+<p>  define_method :who do |my_arg|</p>
+
+<pre><code>my_arg
+</code></pre>
+
+<p>  end
+end
+obj = class_name.new
+puts obj.who('Matz') # => Matz
+```
+{% endblockquote %}</p>
 ]]></content>
   </entry>
   
@@ -152,40 +317,41 @@ Hisea <a href="http://hisea.me/">http://hisea.me/</a></p>
 
 <p>有很多名字，比如单例类，估计是因为 eigenclass 本体类很容易就解决设计模式的单例，结果就误传下来了。</p>
 
-<p><blockquote><p>实际上，如果已经存在一个同名常量，Ruby会重新使用那个常量,如果常量不是class就会报错>> Test = 2<br/>``` ruby<br/>=> 2</p></p><p><blockquote><blockquote><p>class Test<br/>end<br/>TypeError: Test is not a class<br/>from (irb):2<br/>```</p></blockquote></p></blockquote></blockquote>
+<p>{% blockquote %}
+实际上，如果已经存在一个同名常量，Ruby会重新使用那个常量,如果常量不是class就会报错>> Test = 2
+``` ruby
+=> 2</p>
+
+<blockquote><blockquote><p>class Test
+end
+TypeError: Test is not a class
+from (irb):2
+```
+{% endblockquote %}</p></blockquote></blockquote>
 
 <!--more-->
 
 
 <h5>2. Module 的模块方法可以直接被调用</h5>
 
-<p><blockquote><p>module的方法有两种，一种是module方法，这类方法可以直接调用。<br/>``` ruby</p></p><p><blockquote><blockquote><p>module Test<br/>  def Test.test_method</p></p><p><pre><code>puts "hello from module"<br/></code></pre></p><p><p>  end<br/>end<br/>=> nil<br/>Test::test_method<br/>hello from module<br/>=> nil<br/>```</p></blockquote></p></blockquote></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hisea's Ruby和元编程的故事 - 第1回: 色色空空，万物皆为对象]]></title>
-    <link href="http://tech-blog.blogbin.info/blog/2012/08/16/a-story-about-ruby-and-programming-ruby-1/"/>
-    <updated>2012-08-16T08:01:00+08:00</updated>
-    <id>http://tech-blog.blogbin.info/blog/2012/08/16/a-story-about-ruby-and-programming-ruby-1</id>
-    <content type="html"><![CDATA[<p>参阅：
-Hisea <a href="http://hisea.me/">http://hisea.me/</a></p>
+<p>{% blockquote %}
+module的方法有两种，一种是module方法，这类方法可以直接调用。
+``` ruby</p>
 
-<p>Ruby和元编程的故事 - 第0回: 欲练神功，必先自废武功 <a href="http://ruby-china.org/topics/1171">http://ruby-china.org/topics/1171</a></p>
+<blockquote><blockquote><p>module Test
+  def Test.test_method</p>
 
-<h5>1. 官方说法是 eigenclass 本体类</h5>
+<pre><code>puts "hello from module"
+</code></pre>
 
-<p>有很多名字，比如单例类，估计是因为 eigenclass 本体类很容易就解决设计模式的单例，结果就误传下来了。
-<blockquote><p>Singleton/Meta/Anonymous/Ghost/Shadow Class</p></p><p><ul><br/><li> Singleton Class: 单例类</li><br/><li> Meta Class：元类</li><br/><li> Anonymous Class: 匿名类</li><br/><li> Ghost Class：鬼类</li><br/><li> Shadow Class: 影子类<br/>上面的这些东东其实说的都是一个东西，我喜欢叫它 影子类。</p></blockquote></li>
-</ul>
-
-
-<!--more-->
-
-
-<h5>2. 关于 Object#dup 和 Object#clone 的区别</h5>
-
-<p><blockquote><p>对象的复制<br/>前文说对象的存在包括两部分，一是状态/实例变量，另一个是行为，本回专注讲了单例方法和影子类。</p></p><p><p>Ruby中对象的复制也有两种模式，一个是只复制当前的状态/实例变量 dup。另外一种是连同影子类和引用的对象一起复制，从而把单例方法也复制一份。<br/>``` ruby</p></p><p><blockquote><blockquote><p>a = "obj"<br/>def a.hello_self<br/>puts "hello #{self}"<br/>end<br/>b = a.dup<br/>=> "obj"<br/>b.hello_self<br/>NoMethodError: undefined method `hello_self' for "obj":String</p></p><p><pre><code>from (irb):90<br/></code></pre></p><p><p>b = a.clone<br/>=> "obj"<br/>b.hello_self<br/>hello obj<br/>```</p></blockquote></blockquote></p><p><p>其实有本回上述的这些功能，即便是没有class，Ruby也可以作为一种Prototype(类似JavaScript)的面向对象语言了。</p></p><p><p>你可以建立一个对象，生成默认的实例变量，把行为作为单例方法定以在这个对象的影子类上，然后用clone生成千千万万个实例。当然这样比较麻烦，但却是可行的途径之一。</p></p><p><p>其他Object API<br/>对象还有很多其他的功能，比如可以freeze,另外dup跟clone也有一些其他的引用上面的区别，dup只复制引用，clone会吧引用的对象也复制。</p></p><p><p>这些都可以在Object类(Ruby所有对象的父类)API上找到，可以查看apidock.com的文档</p></p><p><p>例如关于dup</p></p><p><p>.dup() produces a shallow copy of obj—the instance variables of obj are copied, but not the objects they reference. dup copies the tainted state of obj. See also the discussion under Object#clone. In general, clone and dup may have different semantics in descendant classes. While clone is used to duplicate an object, including its internal state, dup typically uses the class of the descendant object to create the new instance.</p></blockquote></p>
+<p>  end
+end
+=> nil
+Test::test_method
+hello from module
+=> nil
+```
+{% endblockquote %}</p></blockquote></blockquote>
 ]]></content>
   </entry>
   

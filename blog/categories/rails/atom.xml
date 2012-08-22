@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Tech.Blogbin's Blog]]></title>
   <link href="http://tech-blog.blogbin.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://tech-blog.blogbin.info/"/>
-  <updated>2012-08-22T21:47:07+08:00</updated>
+  <updated>2012-08-22T22:09:24+08:00</updated>
   <id>http://tech-blog.blogbin.info/</id>
   <author>
     <name><![CDATA[Tech Blogbin ]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using binarylogic/settingslogic]]></title>
+    <link href="http://tech-blog.blogbin.info/blog/2012/08/22/using-binarylogic-slash-settingslogic/"/>
+    <updated>2012-08-22T22:00:00+08:00</updated>
+    <id>http://tech-blog.blogbin.info/blog/2012/08/22/using-binarylogic-slash-settingslogic</id>
+    <content type="html"><![CDATA[<p>Rails 项目中有一些全局配置信息需要保存在文件中，采用 binarylogic/settingslogic 来管理这些配置信息：</p>
+
+<p>参阅：
+binarylogic/settingslogic <a href="https://github.com/binarylogic/settingslogic">https://github.com/binarylogic/settingslogic</a></p>
+
+<p>介紹 Settingslogic | Beryllium Work <a href="http://blog.berylliumwork.com/2012/02/settingslogic.html">http://blog.berylliumwork.com/2012/02/settingslogic.html</a></p>
+
+<p>假设 config 有配置文件：
+``` ruby settings.yml
+default: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3000/bad_word_checker/check.json"
+</code></pre>
+
+<p>development:
+  &lt;&lt;: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3001/bad_word_checker/check.json" 
+</code></pre>
+
+<p>test:
+  &lt;&lt;: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3002/bad_word_checker/check.json" 
+</code></pre>
+
+<p>production:
+  &lt;&lt;: *default
+  server_url:</p>
+
+<pre><code>check_sensitive_data: "http://localhst:3003/bad_word_checker/check.json" 
+</code></pre>
+
+<p>```</p>
+
+<!--more-->
+
+
+<p>访问配置信息的代码比较丑陋，如
+``` ruby settings.rb
+SYS_CONFIG = YAML.load_file(Rails.root.join("config/sys_config.yml"))[Rails.env]</p>
+
+<p>puts SYS_CONFIG["server_url"]["check_sensitive_data"]     # => "http://localhst:3001/bad_word_checker/check.json"
+```</p>
+
+<p>如果采用 settingslogic，先创建 settings.rb 文件
+``` ruby app/model/settings.rb</p>
+
+<h1>encoding: UTF-8</h1>
+
+<h1>binarylogic/settingslogic</h1>
+
+<h1>https://github.com/binarylogic/settingslogic</h1>
+
+<p>class Settings &lt; Settingslogic
+  source "#{Rails.root}/config/settings.yml"
+  namespace Rails.env
+end
+```</p>
+
+<p>通过 Settings 来访问配置信息，如：
+<code>ruby
+puts Settings.server_url.check_sensitive_data    # =&gt; "http://localhst:3001/bad_word_checker/check.json"
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails 返回 json 格式的内容]]></title>
@@ -103,7 +178,29 @@ WARNING: Nokogiri was built against LibXML version 2.7.3, but has dynamically lo
 <!--more-->
 
 
-<p><blockquote><p>Managed to fix it following these steps:</p></p><p><p>Installed XCode 4.4 and Command Line Tools<br/>Ran this in terminal:</p></p><p><p>sudo chown -R <user> /usr/local<br/>brew update<br/>brew tap homebrew/dupes<br/>brew install apple-gcc42</p></p><p><p>Installed XQuartz 2.7.2 (http://xquartz.macosforge.org/landing)</p></p><p><p>Fixed any errors reported by brew doctor<br/>Ran this in terminal:</p></p><p><p>gem uninstall rmagick<br/>brew uninstall imagemagick<br/>brew install --fresh imagemagick<br/>gem install rmagick</p></p><p><p>After this, RMagick worked flawlessly again!</p></blockquote></p>
+<p>{% blockquote %}
+Managed to fix it following these steps:</p>
+
+<p>Installed XCode 4.4 and Command Line Tools
+Ran this in terminal:</p>
+
+<p>sudo chown -R <user> /usr/local
+brew update
+brew tap homebrew/dupes
+brew install apple-gcc42</p>
+
+<p>Installed XQuartz 2.7.2 (http://xquartz.macosforge.org/landing)</p>
+
+<p>Fixed any errors reported by brew doctor
+Ran this in terminal:</p>
+
+<p>gem uninstall rmagick
+brew uninstall imagemagick
+brew install --fresh imagemagick
+gem install rmagick</p>
+
+<p>After this, RMagick worked flawlessly again!
+{% endblockquote %}</p>
 ]]></content>
   </entry>
   
@@ -209,7 +306,9 @@ if @issue.save
 
 <h5>4. 最终效果如图</h5>
 
-<p><blockquote><p><img src="/images/2012-08-15-displaying-attachments-and-due-date-within-email-when-a-issue-is-created/redmine_issue_add_email.png"></p></blockquote></p>
+<p>{% blockquote %}
+{% img /images/2012-08-15-displaying-attachments-and-due-date-within-email-when-a-issue-is-created/redmine_issue_add_email.png %}
+{% endblockquote %}</p>
 ]]></content>
   </entry>
   
