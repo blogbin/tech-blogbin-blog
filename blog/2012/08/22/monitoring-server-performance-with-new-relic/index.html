@@ -5,14 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Heroku - Tech.Blogbin's Blog</title>
+  <title>Monitoring server performance with New Relic - Tech.Blogbin's Blog</title>
 
   <meta name="alexaVerifyID" content="-6pNt74TSllotvjLFDIa77kSKLI" />
 
   <meta name="author" content="Tech Blogbin <tech.blogbin@gmail.com>">
 
   
-  <meta name="description" content="Category: Heroku">
+  <meta name="description" content="使用 New Relic 监控服务端性能，优点： 免费帐号可以监控任意数量服务器常规性能指标，如 CPU, Memory, DISK, I/O 和 Network；
+被监控的服务器采用 rpm + yum 方式安装监控代理，安装无损系统；
+监控数据主动发送到 New Relic， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://tech-blog.blogbin.infoblog/categories/heroku/">
+  <link rel="canonical" href="http://tech-blog.blogbin.info/blog/2012/08/22/monitoring-server-performance-with-new-relic/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,36 +82,131 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Heroku</h1>
+    
+      <h1 class="entry-title">Monitoring Server Performance With New Relic</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-22T21:21:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>使用 New Relic 监控服务端性能，优点：</p>
 
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/08/11/how-to-install-octopress-on-heroku/">How to Install Octopress on Heroku</a></h1>
-<time datetime="2012-08-11T11:08:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>11</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/deployment/'>Deployment</a>, <a class='category' href='/blog/categories/heroku/'>Heroku</a>, <a class='category' href='/blog/categories/installation/'>Installation</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a></span>
-</footer>
+<ol>
+<li><p>免费帐号可以监控任意数量服务器常规性能指标，如 CPU, Memory, DISK, I/O 和 Network；</p></li>
+<li><p>被监控的服务器采用 rpm + yum 方式安装监控代理，安装无损系统；</p></li>
+<li><p>监控数据主动发送到 New Relic，一般无需调整防火墙策略；</p></li>
+<li><p>New Relic 和 Rails 核心团队合作，可以深入监控 Rails 项目执行情况，但这需要收费，或者申请试用一段时间；</p></li>
+</ol>
 
 
-</article>
+<p>和 Zabbix 相比，省去本地安装监控中心的工作，本地监控代理安装也非常简单。</p>
+
+<p>参阅：
+Web Application Performance Management (APM) : New Relic
+<a href="www.newrelic.com">www.newrelic.com</a></p>
+
+<p>安装过程非常简单，以 CentOS 6.2 为例，执行以下命令：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm
+</span><span class='line'>
+</span><span class='line'>sudo yum install -y newrelic-sysmond
+</span><span class='line'>
+</span><span class='line'># 其中 a56esdse7cfdsfa5a49fbfdsdsfdsd1wewfwfew28 为您的监控 license_key
+</span><span class='line'>sudo nrsysmond-config --set license_key=a56esdse7cfdsfa5a49fbfdsdsfdsd1wewfwfew28
+</span><span class='line'>
+</span><span class='line'>sudo /etc/init.d/newrelic-sysmond start</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Tech Blogbin <tech.blogbin@gmail.com></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-22T21:21:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/centos/'>CentOS</a>, <a class='category' href='/blog/categories/new-relic/'>New Relic</a>, <a class='category' href='/blog/categories/yum/'>yum</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tech-blog.blogbin.info/blog/2012/08/22/monitoring-server-performance-with-new-relic/" data-via="tech_blogbin" data-counturl="http://tech-blog.blogbin.info/blog/2012/08/22/monitoring-server-performance-with-new-relic/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/20/dhhs-json-jbuilder-at-rails/" title="Previous Post: Rails 返回 json 格式的内容">&laquo; Rails 返回 json 格式的内容</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -243,7 +340,10 @@
       var disqus_shortname = 'tech-blogbin-blog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tech-blog.blogbin.info/blog/2012/08/22/monitoring-server-performance-with-new-relic/';
+        var disqus_url = 'http://tech-blog.blogbin.info/blog/2012/08/22/monitoring-server-performance-with-new-relic/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
