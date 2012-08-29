@@ -5,15 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>申思维 @sg552sg552 meta ruby programming - Tech.Blogbin's Blog</title>
+  <title>Monitoring rails app with the New Relic - Tech.Blogbin's Blog</title>
 
   <meta name="alexaVerifyID" content="-6pNt74TSllotvjLFDIa77kSKLI" />
 
   <meta name="author" content="Tech Blogbin <tech.blogbin@gmail.com>">
 
   
-  <meta name="description" content="申思维 @sg552sg552 非常热情，主动告知我 PPT 的下载地址，非常感谢！ 参阅： [北京][2012年08月11日] Ruby 活动公告+媒体资料+小结 » 社区 | Ruby China
-http://ruby-china.org/topics/4662 PPT：meta &hellip;">
+  <meta name="description" content="尝试 New Relic 监控 Rails App 项目的运行情况。 如果采用 Rails 3，安装 New Relic 非常简单，如果使用 Rails 2，比较繁琐一些。
+好在官方网站有相应的介绍，仔细阅读即可。 参阅 Ruby Agent installation - New Relic &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +22,7 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://tech-blog.blogbin.info/blog/2012/08/14/shen-si-wei-at-sg552sg552-meta-ruby-programming/">
+  <link rel="canonical" href="http://tech-blog.blogbin.info/blog/2012/08/29/monitoring-rails-app-with-the-new-relic/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -87,7 +87,7 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
   
   <header>
     
-      <h1 class="entry-title">申思维 @sg552sg552 Meta Ruby Programming</h1>
+      <h1 class="entry-title">Monitoring Rails App With the New Relic</h1>
     
     
       <p class="meta">
@@ -103,7 +103,7 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
   
 
 
-<time datetime="2012-08-14T12:47:00+08:00" pubdate data-updated="true">Aug 14<span>th</span>, 2012</time>
+<time datetime="2012-08-29T22:01:00+08:00" pubdate data-updated="true">Aug 29<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -112,71 +112,119 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
   </header>
 
 
-<div class="entry-content"><p>申思维 @sg552sg552 非常热情，主动告知我 PPT 的下载地址，非常感谢！</p>
+<div class="entry-content"><p>尝试 New Relic 监控 Rails App 项目的运行情况。</p>
 
-<p>参阅：</p>
-
-<p>[北京][2012年08月11日] Ruby 活动公告+媒体资料+小结 » 社区 | Ruby China
-<a href="http://ruby-china.org/topics/4662">http://ruby-china.org/topics/4662</a></p>
-
-<p>PPT：meta programming ruby // Speaker Deck
-<a href="https://speakerdeck.com/u/sg552sg552/p/meta-programming-ruby">https://speakerdeck.com/u/sg552sg552/p/meta-programming-ruby</a></p>
-
-<p>MP3：<a href="http://vdisk.weibo.com/s/alUOz">http://vdisk.weibo.com/s/alUOz</a></p>
-
-<p>一些总结：</p>
+<p>如果采用 Rails 3，安装 New Relic 非常简单，如果使用 Rails 2，比较繁琐一些。
+好在官方网站有相应的介绍，仔细阅读即可。</p>
 
 <!--more-->
 
 
-<h5>1. const_set 和 const_get 操作常量的用法</h5>
+<h5>参阅</h5>
 
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/core_methods.jpeg"></p></blockquote>
+<p>Ruby Agent installation - New Relic Documentation</p>
 
+<p><a href="https://newrelic.com/docs/ruby/ruby-agent-installation">https://newrelic.com/docs/ruby/ruby-agent-installation</a></p>
 
-<h5>2. 举例子说明：动态方法的好处，减少代码冗余</h5>
-
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/refactoring.jpeg"></p></blockquote>
-
-
-<h5>3. %Q{} 语法使用，表示一行字符串</h5>
-
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/basic_class_eval.jpeg"></p></blockquote>
-
-
-<h5>4. class_variables，class_variable_defined? 和 <em>get, </em>set 方法的使用</h5>
-
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/basic_class_variables.jpeg"></p></blockquote>
-
-
-<h5>5. remove_const 和 const_set 对常量的动态操作</h5>
-
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/substitude_class.jpeg"></p></blockquote>
-
-
-<p>想了半天才明白，Symbal 估计实现 Symbal#to_proc 方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Symbal</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">to_proc</span>
-</span><span class='line'>    <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="o">|</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">send</span> <span class="nb">self</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Installing the Gem
+</span><span class='line'>We recommend installing the New Relic Ruby gem in order to have better control over versions and dependencies. However, the gem is not supported for Rails versions prior to 2.0. If you're using Rails 1.2.6 and earlier, install the plugin.
+</span><span class='line'>
+</span><span class='line'>Our gem is available on rubygems.org as newrelic_rpm:
+</span><span class='line'>
+</span><span class='line'> sudo gem install newrelic_rpm
+</span><span class='line'>For Rails 3 and installations using Bundler, simply add our gem to the Gemfile:
+</span><span class='line'>
+</span><span class='line'>gem 'newrelic_rpm'
+</span><span class='line'>For Rails versions 2.1 to 2.3 without Bundler, edit environment.rb and add to the initializer block:
+</span><span class='line'>
+</span><span class='line'>config.gem "newrelic_rpm" 
+</span><span class='line'>For Rails versions 2.0.*, edit environment.rb and add this statement after the initializer block:
+</span><span class='line'>
+</span><span class='line'>require "newrelic_rpm"</span></code></pre></td></tr></table></div></figure>
 
 
-<h5>6. 适合迭代中，对每一个其中的元素做一次 Symbal 对象对应的方法调用。</h5>
+<p>Ruby Agent installation - plugin - New Relic Documentation</p>
 
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/symbol_to_proc.jpeg"></p></blockquote>
+<p><a href="https://newrelic.com/docs/ruby/ruby-agent-installation-plugin">https://newrelic.com/docs/ruby/ruby-agent-installation-plugin</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Installing the Plugin
+</span><span class='line'>Note that we strongly encourage using the gem.
+</span><span class='line'>The plugin should be installed from Github using the following commands.
+</span><span class='line'>
+</span><span class='line'>For Rails versions 2.*:
+</span><span class='line'>
+</span><span class='line'>ruby script/plugin install git://github.com/newrelic/rpm.git
+</span><span class='line'>mv vendor/plugins/rpm vendor/plugins/newrelic_rpm
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>This will export the plugin into your application's vendor/plugins directory.
+</span><span class='line'>
+</span><span class='line'>If you can't install the plugin directly from the git URL, you can clone the repository into the vendor/plugins directory.</span></code></pre></td></tr></table></div></figure>
 
 
-<h5>7. stub 方法实现测试中 Mock 的功能，估计 stub 方法实现是通过 Module#define_method 重新定义了方法，返回代码块执行的结果。</h5>
+<p>I&#8217;m using Unicorn and I don&#8217;t see any data - New Relic Documentation</p>
 
-<blockquote><p><img src="/images/2012-08-14-shen-si-wei-at-sg552sg552-meta-ruby-programming/symbol_to_proc.jpeg"></p></blockquote>
+<p><a href="https://newrelic.com/docs/troubleshooting/im-using-unicorn-and-i-dont-see-any-data">https://newrelic.com/docs/troubleshooting/im-using-unicorn-and-i-dont-see-any-data</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>I'm using Unicorn and I don't see any data
+</span><span class='line'>
+</span><span class='line'>If you're using Unicorn with the agent, you should be using the preload_app truedirective in your Unicorn configuration or the agent may not finish starting up. (see http://unicorn.bogomips.org/Unicorn/Configurator.html#method-i-preload_app)
+</span><span class='line'>
+</span><span class='line'>If you don't want to use preload_app true, you can manually call our handler for forking web servers from an initializer file in config/initializers:
+</span><span class='line'>
+</span><span class='line'># Ensure the agent is started using Unicorn
+</span><span class='line'># This is needed when using Unicorn and preload_app is not set to true.
+</span><span class='line'># See http://support.newrelic.com/kb/troubleshooting/unicorn-no-data  
+</span><span class='line'>::NewRelic::Agent.after_fork(:force_reconnect =&gt; true) if defined? Unicorn</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h5>监控效果如下图：</h5>
+
+<blockquote><p><img src="/images/2012-08-29-monitoring-rails-app-with-the-new-relic/rails_app.jpeg"></p></blockquote>
+
+
 
 </div>
 
@@ -200,12 +248,12 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
   
 
 
-<time datetime="2012-08-14T12:47:00+08:00" pubdate data-updated="true">Aug 14<span>th</span>, 2012</time>
+<time datetime="2012-08-29T22:01:00+08:00" pubdate data-updated="true">Aug 29<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/metaprogramming-ruby/'>MetaProgramming Ruby</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+    <a class='category' href='/blog/categories/bundle/'>Bundle</a>, <a class='category' href='/blog/categories/bundler/'>Bundler</a>, <a class='category' href='/blog/categories/gem/'>Gem</a>, <a class='category' href='/blog/categories/gemfile/'>Gemfile</a>, <a class='category' href='/blog/categories/new-relic/'>New Relic</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ror/'>RoR</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/rubyonrails/'>RubyOnRails</a>
   
 </span>
 
@@ -214,7 +262,7 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tech-blog.blogbin.info/blog/2012/08/14/shen-si-wei-at-sg552sg552-meta-ruby-programming/" data-via="tech_blogbin" data-counturl="http://tech-blog.blogbin.info/blog/2012/08/14/shen-si-wei-at-sg552sg552-meta-ruby-programming/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tech-blog.blogbin.info/blog/2012/08/29/monitoring-rails-app-with-the-new-relic/" data-via="tech_blogbin" data-counturl="http://tech-blog.blogbin.info/blog/2012/08/29/monitoring-rails-app-with-the-new-relic/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -227,10 +275,8 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/08/13/the-metaprogramming-charm-reflection/" title="Previous Post: 元编程的魅力——反射机制 - 逸光 - (_2b || ! _2b).is_a? Question">&laquo; 元编程的魅力——反射机制 - 逸光 - (_2b || ! _2b).is_a? Question</a>
+        <a class="basic-alignment left" href="/blog/2012/08/28/securing-centos-server-with-firewall/" title="Previous Post: Securing CentOS Server with firewall">&laquo; Securing CentOS Server with firewall</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/08/14/buying-domain-and-configuring-domain-for-githubs-octopress/" title="Next Post: 购买个人域名以及为部署在 GitHub 的Octopress 配置个人域名">购买个人域名以及为部署在 GitHub 的Octopress 配置个人域名 &raquo;</a>
       
     </p>
   </footer>
@@ -301,10 +347,6 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
     <ul class="posts">
     
         <li class="related">
-        <a href="/blog/2012/08/29/monitoring-rails-app-with-the-new-relic/">Monitoring rails app with the New Relic</a>
-        </li>
-    
-        <li class="related">
         <a href="/blog/2012/08/28/securing-centos-server-with-firewall/">Securing CentOS Server with firewall</a>
         </li>
     
@@ -318,6 +360,10 @@ http://ruby-china.org/topics/4662 PPT：meta &hellip;">
     
         <li class="related">
         <a href="/blog/2012/08/25/using-jcftangs-octopress-relatedposts/">Using jcftang's octopress-relatedposts</a>
+        </li>
+    
+        <li class="related">
+        <a href="/blog/2012/08/25/using-neerajcses-octopress-calendar-aside/">Using neerajcse's octopress-calendar-aside</a>
         </li>
     
     </ul>
@@ -578,8 +624,8 @@ $(document).ready(function(){
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://tech-blog.blogbin.info/blog/2012/08/14/shen-si-wei-at-sg552sg552-meta-ruby-programming/';
-        var disqus_url = 'http://tech-blog.blogbin.info/blog/2012/08/14/shen-si-wei-at-sg552sg552-meta-ruby-programming/';
+        var disqus_identifier = 'http://tech-blog.blogbin.info/blog/2012/08/29/monitoring-rails-app-with-the-new-relic/';
+        var disqus_url = 'http://tech-blog.blogbin.info/blog/2012/08/29/monitoring-rails-app-with-the-new-relic/';
         var disqus_script = 'embed.js';
       
     (function () {
