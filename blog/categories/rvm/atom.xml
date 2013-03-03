@@ -4,7 +4,7 @@
   <title><![CDATA[Category: RVM | Tech.Blogbin's Blog]]></title>
   <link href="http://tech-blog.blogbin.info/blog/categories/rvm/atom.xml" rel="self"/>
   <link href="http://tech-blog.blogbin.info/"/>
-  <updated>2013-02-28T00:17:30+08:00</updated>
+  <updated>2013-03-03T21:04:15+08:00</updated>
   <id>http://tech-blog.blogbin.info/</id>
   <author>
     <name><![CDATA[Tech Blogbin ]]></name>
@@ -12,6 +12,116 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Uninstall Mixed mode or Multi-User RVM Completely and install Single-User RVM]]></title>
+    <link href="http://tech-blog.blogbin.info/blog/2013/03/03/uninstall-mixed-mode-or-multi-user-rvm-completely-and-install-single-user-rvm/"/>
+    <updated>2013-03-03T20:59:00+08:00</updated>
+    <id>http://tech-blog.blogbin.info/blog/2013/03/03/uninstall-mixed-mode-or-multi-user-rvm-completely-and-install-single-user-rvm</id>
+    <content type="html"><![CDATA[<p>之前是 安装 Mixed mode or Multi-User，
+<code>
+user$ curl -L https get rvm io sudo bash -s stable
+</code></p>
+
+<p>发现不太适合，想改为 Single-User RVM，可在 RVM 官网 <a href="https://rvm.io/">https://rvm.io/</a> 找不到完全卸载 rvm 的命令。</p>
+
+<p>网上找到一篇文章，不过是介绍如何删除 Single-User的，可以参考一下。
+<a href="http://mkoby.com/2011/06/03/completely-removing-rvm/">http://mkoby.com/2011/06/03/completely-removing-rvm/</a></p>
+
+<p>rvm implode 似乎可以卸载 rvm，但一直反馈权限相关的问题。</p>
+
+<!--more-->
+
+
+<p><code>``
+[atyun@s6 ~]$ rvmsudo implode
+Warning: can not check</code>/etc/sudoers<code>for</code>secure_path<code>, falling back to call via</code>/usr/bin/env<code>, this breaks rules from</code>/etc/sudoers`. export rvmsudo_secure_path=1 to avoid the warning./usr/bin/env: implode: No such file or directory</p>
+
+<p>[atyun@s6 ~]$ sudo rvm implode
+sudo: rvm: command not found
+```</p>
+
+<p><code>``
+[atyun@s6 ~]$ rvm implode
+Are you SURE you wish for rvm to implode?
+This will recursively remove /usr/local/rvm and other dvm traces?
+(anything other than 'yes' will cancel) &gt; yes
+Removing rvm-shipped binaries (rvm-prompt, rvm, rvm-sudo rvm-shell and rvm-auto-ruby)
+Removing rvm wrappers in /home/atyun/.rvm/bin
+find:</code>/home/atyun/.rvm/bin': No such file or directory
+Hai! Removing /usr/local/rvm
+rm: cannot remove <code>/etc/profile.d/rvm.sh': Permission denied
+rm: cannot remove</code>/usr/local/share/man/man1/rvm.1': Permission denied
+rm: cannot remove <code>/usr/local/share/man/man1/rvm.1.gz': Permission denied
+...
+rm: cannot remove</code>/usr/local/rvm/contrib/hudson/rvmRake-1.0-SNAPSHOT-20100819.hpi': Permission denied
+rm: cannot remove <code>/usr/local/rvm/contrib/hudson/rvmRuby-1.0-SNAPSHOT-20100819.hpi': Permission denied
+rm: cannot remove</code>/usr/local/rvm/contrib/hudson/README.md': Permission denied
+rm: cannot remove <code>/usr/local/rvm/contrib/bootstrap_rails_environment': Permission denied
+rm: cannot remove</code>/usr/local/rvm/archives/wayneeseguin-rvm-stable.tgz': Permission denied
+/usr/local/rvm has been removed.</p>
+
+<p>Note you may need to manually remove /etc/rvmrc and ~/.rvmrc if they exist still.
+Please check all .bashrc .bash_profile .profile and .zshrc for RVM source lines and delete or comment out if this was a Per-User installation.
+Also make sure to remove <code>rvm</code> group if this was a system installation.
+Finally it might help to relogin / restart if you want to have fresh environment (like for installing RVM again).
+```</p>
+
+<p>好吧，老老实实改为手动模式。删除 系统级别 rvm 相关文件
+```
+[atyun@s6 ~]$ sudo /usr/local/rvm</p>
+
+<p>[atyun@s6 ~]$ sudo rm -fr /etc/profile.d/rvm.sh</p>
+
+<p>[atyun@s6 ~]$ sudo rm -fr /usr/local/share/man/man1/rvm.1</p>
+
+<p>[atyun@s6 ~]$ sudo rm -fr /usr/local/share/man/man1/rvm.1.gz</p>
+
+<p>[atyun@s6 ~]$ sudo rm /etc/rvmrc</p>
+
+<p>[atyun@s6 ~]$ sudo groupdel rvm
+```</p>
+
+<p>删除用户级别 rvm 相关文件
+```
+[atyun@s6 ~]$ rm .rvmrc</p>
+
+<p>[atyun@s6 ~]$ rm -fr .rvm*
+```</p>
+
+<p>删除 ~/.bash_profile 和 rvm 相关的内容
+<code>
+[atyun@ays5 ~]$ vi ~/.bash_profile
+</code></p>
+
+<p><code>
+[atyun@ays5 ~]$ \curl -L https://get.rvm.io | bash -s stable
+</code></p>
+
+<p>```
+[atyun@ays5 ~]$ cat ~/.bash_profile</p>
+
+<h1>.bash_profile</h1>
+
+<h1>Get the aliases and functions</h1>
+
+<p>if [ -f ~/.bashrc ]; then</p>
+
+<pre><code>    . ~/.bashrc
+</code></pre>
+
+<p>fi</p>
+
+<h1>User specific environment and startup programs</h1>
+
+<p>PATH=$PATH:$HOME/bin</p>
+
+<p>export PATH</p>
+
+<p>[[ -s "$HOME/.rvm/scripts/rvm" ]] &amp;&amp; source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session <em>as a function</em>
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Install Ruby 2.0 on CentOS 6.3]]></title>
